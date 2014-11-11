@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<body>
+<div class="header">
+	<a href="http://localhost:8080/eLearningJJ-war/">Home</a>
+	<a href="login.xhtml">Login</a>
+        <a href="dashboard.xhtml">Dashboard</a>
+        <h:form>
+            <h:commandLink value="Sign Out" action="#{userManagedBean.sessionDestroy()}"></h:commandLink>
+        </h:form> 
+</div>
+</body>
+</html>

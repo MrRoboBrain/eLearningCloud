@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+    <ui:define name="content">
+       <center>
+       	<h1>Welcome to eLearningJJ</h1>
+        <p>This is our login page</p>
+        <h:form>
+            <h:panelGrid columns="1">
+                <h:outputLabel value="Username:" />
+                <h:inputText id="login_username"
+                             required="true"
+                             requiredMessage="Enter your username."
+                             value="#{userManagedBean.username}" 
+                            />
+                <h:outputLabel value="Password:" />
+                <h:inputText id="login_password"
+                             required="true"
+                             requiredMessage="Enter your password."
+                             value="#{userManagedBean.password}" 
+                            />
+                <h:commandButton value="Login" />
+                
+                <!-- forms required messages -->
+                <h:message for="login_username" /><br/>  
+                <h:message for="login_password" /><br/>
+                
+                <!-- server's response -->
+                <h:outputLabel value="#{userManagedBean.loginResponse}" />
+                
+            </h:panelGrid>
+        </h:form>
+       </center>
+       <hr/>
+    </ui:define>
+</ui:composition>
+</html>
