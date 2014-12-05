@@ -7,6 +7,7 @@
 package com.elearningjj.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,9 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 public class User implements Serializable {
+    @Size(max = 512)
+    @Column(name = "USER_ROLES")
+    private String userRoles;
+    @OneToMany(mappedBy = "userId")
+    private Collection<Subject> subjectCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,6 +111,23 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.elearningjj.entities.User[ userId=" + userId + " ]";
+    }
+
+    public String getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(String userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    @XmlTransient
+    public Collection<Subject> getSubjectCollection() {
+        return subjectCollection;
+    }
+
+    public void setSubjectCollection(Collection<Subject> subjectCollection) {
+        this.subjectCollection = subjectCollection;
     }
     
 }

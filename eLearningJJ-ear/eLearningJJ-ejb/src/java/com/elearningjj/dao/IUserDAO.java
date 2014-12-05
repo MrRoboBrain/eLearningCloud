@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface IUserDAO {
     public User find(User obj);
+    public void add(User obj);
 }

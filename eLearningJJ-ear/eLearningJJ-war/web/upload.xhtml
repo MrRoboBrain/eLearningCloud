@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{userManagedBean.permission()}"/>
+    </f:metadata>
+    <ui:define name="content">
+       <center>
+       	<h1>Welcome to upload page</h1>
+        <p>You may now attach a file for upload</p>
+        <hr/>
+       
+        <h:form enctype="multipart/form-data">
+           <h:panelGrid columns="1">
+               <h:outputLabel value="Click to choose a file:" />
+               <h:inputFile value="#{uploadManagedBean.fileToUpload}"/>
+               
+               <h:outputLabel value="Select a category" />
+               <h:selectOneMenu value="#{uploadManagedBean.categoryToUpload}">
+                   <f:selectItems value="#{uploadManagedBean.subjectCodes}"/>
+               </h:selectOneMenu>
+        
+               <h:commandButton action="#{uploadManagedBean.uploadFile()}" value="Publish"/>
+           </h:panelGrid>   
+         </h:form>
+        
+        
+        <h2>ad subject</h2>
+        
+        <h3>
+                Admin Panel
+            </h3>
+            
+            <h:form>
+                <h5>Subject Code</h5>
+                <h:inputText value="#{subjectManagedBean.subjectCode}"/>
+                <h5>Subject Name</h5>
+                <h:inputText value="#{subjectManagedBean.subjectName}"/>
+                <br/>
+                <h:commandButton action="#{subjectManagedBean.addSubject()}" value="Add Subject"/>
+            </h:form>
+
+        </center>
+    </ui:define>
+</ui:composition>
+</html>

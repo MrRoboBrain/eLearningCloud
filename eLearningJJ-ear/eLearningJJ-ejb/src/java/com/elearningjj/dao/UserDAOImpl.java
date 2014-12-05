@@ -48,5 +48,25 @@ public class UserDAOImpl implements IUserDAO {
 
         return user;
     }
+
+    /**
+     * This method is invoked by administrator when new user is need to be added.
+     * 
+     * @param obj 
+     */
+    @Override
+    public void add(User obj) {
+        try {
+            tx.begin();
+            
+            manager.persist(obj);
+
+            tx.commit();
+            manager.close();
+            emf.close();
+        } catch (Exception e) {
+            System.out.println("Oops, an error occured while trying to sent a message." + e.getMessage());
+        }
+    }
     
 }

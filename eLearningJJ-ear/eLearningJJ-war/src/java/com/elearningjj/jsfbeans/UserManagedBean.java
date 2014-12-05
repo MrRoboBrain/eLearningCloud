@@ -3,30 +3,30 @@ package com.elearningjj.jsfbeans;
 import com.elearningjj.beans.UserStatelessBeanLocal;
 import com.elearningjj.entities.User;
 import java.io.IOException;
-import java.util.List;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
-/**
- * User managed bean
- * @author Milan
- */
-@ManagedBean (name="userManagedBean")
+
+@Named("userManagedBean")
 @SessionScoped
-public class UserManagedBean {
+public class UserManagedBean implements Serializable {
 
     /* Instance of User's business logic */
     @EJB
     UserStatelessBeanLocal userStateless;
     
+    
     /* User model attr */
+    private int id;
     private String username;
     private String password;
+    private String roles;
     private boolean isActiveSession;
     
     /* Singleton pattern, holding data for model User */
@@ -37,6 +37,14 @@ public class UserManagedBean {
      */
     public UserManagedBean() {
 
+    }
+    
+    /**
+     * Getter for id
+     * @return id
+     */
+    public int getId() {
+        return id;
     }
 
     /**
@@ -56,6 +64,14 @@ public class UserManagedBean {
     }
     
     /**
+     * Getter for roles
+     * @return 
+     */
+    public String getRoles() {
+        return roles;
+    }
+    
+    /**
      * Getter for active session
      * @return true/false
      */
@@ -63,6 +79,14 @@ public class UserManagedBean {
         return isActiveSession;
     }
 
+    /**
+     * Setter for id
+     * @param id 
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     /**
      * Setter for username
      * @param username 
@@ -77,6 +101,14 @@ public class UserManagedBean {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    /**
+     * Setter for roles
+     * @param roles
+     */
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
     
     /**
@@ -130,10 +162,19 @@ public class UserManagedBean {
             /* Check for user obj existance in the db and login or fail */
             if(userStateless.login(userModel) != null) {
                 
-                response = "You have been logged in sucessfully.";
+                /* set the data to user model */
                 userModel = userStateless.login(userModel);
                 ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
                 
+                /* set the data to user managed bean to hold the session*/
+                setId(userModel.getUserId());
+                setUsername(userModel.getUserName());
+                setPassword(userModel.getUserPassword());
+                setRoles(userModel.getUserRoles());
+                
+                response = "You have been logged in sucessfully.";
+                
+                /* try to redirect user to his dashboard */
                 try {
                     isActiveSession = true;
                     context.redirect("dashboard.xhtml");
@@ -147,6 +188,17 @@ public class UserManagedBean {
         } 
         
         return response;
+    }
+    
+    /**
+     * This method is invoked by the user on register.xhtml page. When user submit
+     * the form, the server side is checking for the data and sending it to the
+     * backing bean.
+     * @return
+     * @throws NullPointerException 
+     */
+    public String getRegistrationResponse() throws NullPointerException {
+        return null;
     }
 
     /**
@@ -163,7 +215,7 @@ public class UserManagedBean {
             } catch (IOException ex) {
                 Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
+        } else {            
             System.out.println("*** The session is still active. User is logged in. *** ");
         }
     }

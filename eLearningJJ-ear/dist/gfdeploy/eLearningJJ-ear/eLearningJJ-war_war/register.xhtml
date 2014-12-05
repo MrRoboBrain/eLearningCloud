@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+    <ui:define name="content">
+       <center>
+       	<h1>Welcome to eLearningJJ</h1>
+        <p>This is our registration page</p>
+        
+        
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Username" class="title" />
+                <h:inputText id="username"
+                             required="true"
+                             requiredMessage="Username is required."
+                             validatorMessage="username must be between 3 and 16 characters"
+                             value="#{registrationManagedBean.username}"
+                             >
+
+                             <f:validateLength minimum="3" maximum="16" />
+                </h:inputText>
+
+                <h:outputLabel value="Password" class="title"/>
+                <h:inputText id="email"
+                             required="true"
+                             requiredMessage="Password is required."
+                             validatorMessage="Password must be valid."
+                             value="#{registrationManagedBean.password}">
+
+                </h:inputText>
+
+              
+                <h:outputLabel value="Pick a roles" />
+                <h:selectOneMenu id="subscriptions"
+                                 value="#{registrationManagedBean.roles}">
+                   <f:selectItem id="item1" itemLabel="Administrator" itemValue="admin" />
+                   <f:selectItem id="item2" itemLabel="Professor" itemValue="profesor" />
+                   <f:selectItem id="item3" itemLabel="Student" itemValue="student" />
+                </h:selectOneMenu>   
+                
+                <h:outputLabel value="" />
+                <h:commandButton value="Welcome Me">
+                   <f:ajax execute="@form" render="output"/>
+                </h:commandButton>
+
+                <br/>
+
+            </h:panelGrid>
+
+            <h:outputLabel id="output" value="#{registrationManagedBean.registerResponse}" /><br/>
+
+            <div class="output">
+                <h:message for="username" /><br/>
+                <h:message for="password" /><br/>
+            </div>
+        </h:form>
+        
+        
+       </center>
+       <hr/>
+    </ui:define>
+</ui:composition>
+</html>

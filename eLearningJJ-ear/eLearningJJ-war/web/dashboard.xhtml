@@ -14,9 +14,35 @@
     <ui:define name="content">
        <center>
        	<h1>Welcome to eLearningJJ</h1>
-        <p>This is our dashboard page</p>
+        <p>This is our dashboard page #{userManagedBean.username}</p>
        </center>
        <hr/>
+       
+       
+       <h:form>
+           <h:dataTable value="#{uploadManagedBean.subjectCodes}" var="subjectCode" border="1" >
+                <h:column>
+                    <h:outputLabel value="#{subjectCode}"/>
+                </h:column>
+                <h:column>
+                    <h:dataTable value="#{downloadManagedBean.getFilesInFolder(subjectCode)}" var="fileLink">
+                            <h:column>
+                                <h:outputLabel>
+                                    #{fileLink}
+                                </h:outputLabel>
+                            </h:column>
+
+                            <h:column>
+                                <h:selectBooleanCheckbox value="#{downloadManagedBean.selectedFiles[fileLink]}" />
+                            </h:column>
+
+                        </h:dataTable>
+                    </h:column>
+            </h:dataTable>
+            <h:commandButton value="Download" action="#{downloadManagedBean.downloadSelected}" />
+        </h:form>
+       
+       
     </ui:define>
 </ui:composition>
 </html>

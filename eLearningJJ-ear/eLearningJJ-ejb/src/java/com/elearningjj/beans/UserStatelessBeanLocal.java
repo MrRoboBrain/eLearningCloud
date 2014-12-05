@@ -17,4 +17,5 @@ import javax.ejb.Local;
 @Local
 public interface UserStatelessBeanLocal {
     public User login(User obj);
+    public void registerUser(User obj);
 }

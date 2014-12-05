@@ -31,4 +31,16 @@ public class UserStatelessBean implements UserStatelessBeanLocal {
         IUserDAO userDao = new UserDAOImpl();
         return userDao.find(obj);
     }
+
+    /** 
+     * Instantiating DAO interface and persist the new user into the db.
+     * This method is called and used in WAR container
+     * 
+     * @param obj
+     */
+    @Override
+    public void registerUser(User obj) {
+        IUserDAO userDao = new UserDAOImpl();
+        userDao.add(obj);
+    }
 }
